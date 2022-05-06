@@ -10,6 +10,7 @@ def create_app():
     env_config.init_app(app)
     database.init_app(app)
     migration.init_app(app)
+
     routes.init_app(app)
 
     return app
