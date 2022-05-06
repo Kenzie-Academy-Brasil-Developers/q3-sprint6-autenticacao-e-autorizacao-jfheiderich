@@ -21,7 +21,6 @@ class UserModel(db.Model):
     last_name = Column(String(511), nullable=False)
     email = Column(String(255), nullable=False)
     password_hash = Column(String(511), nullable=False)
-    # api_key = Column(String(511), nullable=False)
 
     @validates('email')
     def validate_email(self, key, email):

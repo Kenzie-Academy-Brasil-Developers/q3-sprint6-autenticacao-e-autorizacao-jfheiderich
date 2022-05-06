@@ -1,7 +1,6 @@
 import secrets
 from http import HTTPStatus
 
-from app.configs.auth import auth
 from app.models.user_model import UserModel
 from flask import current_app, jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required
@@ -35,8 +34,6 @@ def create_user():
 
         session: Session = current_app.db.session
 
-        # data["api_key"] = secrets.token_urlsafe(32)
-
         new_user = UserModel(**data)
         session.add(new_user)
         session.commit()
@@ -58,15 +55,9 @@ def signin():
 
     token = create_access_token(user)
 
-    # if user.api_key:
-    #     return {"api_key": user.api_key}, HTTPStatus.OK
-    # else:
-    #     return {"error": "Unauthorized"}, HTTPStatus.UNAUTHORIZED
-
     return jsonify({'token': token}), HTTPStatus.OK
 
 
-# @auth.login_required
 @jwt_required()
 def get_home():
 
@@ -76,7 +67,6 @@ def get_home():
 
 
 @jwt_required()
-# @auth.login_required
 def put_home():
     data = request.get_json()
     correct_keys = ['name', 'last_name', 'email', 'password']
@@ -118,9 +108,9 @@ def put_home():
 
 
 @jwt_required()
-# @auth.login_required
-def delete_user(user_id):
-    user = UserModel.query.get(user_id)
+def delete_user():
+    user = UserModel.query.first()
+
     session: Session = current_app.db.session
 
     if not user:

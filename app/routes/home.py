@@ -7,4 +7,4 @@ bp_home.get('')(user_controller.get_home)
 
 bp_home.put('')(user_controller.put_home)
 
-bp_home.delete('/<int:user_id>')(user_controller.delete_user)
+bp_home.delete('')(user_controller.delete_user)
